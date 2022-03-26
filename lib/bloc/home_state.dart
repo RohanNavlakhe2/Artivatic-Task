@@ -4,14 +4,18 @@ abstract class HomeState extends Equatable {
   const HomeState();
 }
 
-class HomeDataLoading extends HomeState {
+
+class HomeDataLoadingState extends HomeState {
+
+  HomeDataLoadingState();
+
   @override
   List<Object> get props => [];
 }
 
-class HomeDataSuccess extends HomeState{
+class HomeDataSuccessState extends HomeState{
 
-  HomeDataSuccess(this.homeData);
+  HomeDataSuccessState(this.homeData);
 
   final HomeData homeData;
 
@@ -20,7 +24,12 @@ class HomeDataSuccess extends HomeState{
 
 }
 
-class HomeDataError extends HomeState{
+class HomeDataErrorState extends HomeState{
+
+  HomeDataErrorState(this.errorMsg);
+
+  String errorMsg;
+
   @override
   List<Object?> get props => [];
 }

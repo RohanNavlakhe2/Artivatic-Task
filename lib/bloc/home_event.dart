@@ -4,4 +4,5 @@ abstract class HomeEvent {
   const HomeEvent();
 }
 
-class GetHomeData extends HomeEvent{}
+class FetchHomeDataEvent extends HomeEvent{}
+class RefreshHomeDataEvent extends HomeEvent{}

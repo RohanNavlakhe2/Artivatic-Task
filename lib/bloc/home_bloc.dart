@@ -15,13 +15,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeRepository _homeRepository;
 
-  HomeBloc(this._homeRepository) : super(HomeDataLoading()) {
-    on<GetHomeData>((event, emit) async {
-       emit(HomeDataLoading());
+  HomeBloc(this._homeRepository) : super(HomeDataLoadingState()) {
+    on<HomeEvent>((event, emit) async {
+
+       if(event is FetchHomeDataEvent)
+          emit(HomeDataLoadingState());
+
        try{
-         emit(HomeDataSuccess(await _homeRepository.getHomeData()));
+         emit(HomeDataSuccessState(await _homeRepository.getHomeData()));
        } on CustomException catch(e){
-          emit(HomeDataError());
+          emit(HomeDataErrorState(e.toString()));
        }
     });
   }

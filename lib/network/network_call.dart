@@ -27,7 +27,7 @@ class NetworkCall {
       ).timeout(Duration(seconds: 10), onTimeout: () {
         //10sec
         debugPrint("GET Req Timeout");
-        throw TimeoutException();
+        throw TimeoutException("Please check your internet");
       });
 
       if (httpResponse.statusCode == 200)

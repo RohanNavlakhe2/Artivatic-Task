@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider(create: (_) => HomeBloc(HomeRepository())..add(GetHomeData()),child: Home())
+      debugShowCheckedModeBanner: false,
+      home: BlocProvider(create: (_) => HomeBloc(HomeRepository())..add(FetchHomeDataEvent()),child: Home())
     );
   }
 }
