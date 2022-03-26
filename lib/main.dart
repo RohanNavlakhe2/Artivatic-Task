@@ -1,5 +1,6 @@
 import 'package:artivatic_task/bloc/home_bloc.dart';
 import 'package:artivatic_task/home.dart';
+import 'package:artivatic_task/reposiotory/home_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider(create: (_) => HomeBloc()..add(GetHomeData()),child: Home())
+      home: BlocProvider(create: (_) => HomeBloc(HomeRepository())..add(GetHomeData()),child: Home())
     );
   }
 }
