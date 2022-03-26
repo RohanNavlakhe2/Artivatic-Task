@@ -1,5 +1,5 @@
 import 'package:artivatic_task/bloc/home_bloc.dart';
-import 'package:artivatic_task/home.dart';
+import 'package:artivatic_task/ui/home.dart';
 import 'package:artivatic_task/reposiotory/home_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      //Adding FetchHomeDateEvent to the Bloc initially
       home: BlocProvider(create: (_) => HomeBloc(HomeRepository())..add(FetchHomeDataEvent()),child: Home())
     );
   }

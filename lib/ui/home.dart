@@ -1,5 +1,4 @@
 import 'package:artivatic_task/bloc/home_bloc.dart';
-import 'package:artivatic_task/model/home_data.dart';
 import 'package:artivatic_task/model/rows.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -14,52 +13,52 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ValueNotifier _title = ValueNotifier("");
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-      title: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          if (state is HomeDataSuccessState)
-            return Text(state.homeData.title ?? "");
-          else
-            return Text("");
-        },
-      ),
-    ), body: RefreshIndicator(
-      onRefresh: () {
-        context.read<HomeBloc>().add(RefreshHomeDataEvent());
-        return Future.value();
-      },
-      child: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
+    return Scaffold(
+        appBar: AppBar(
+          title: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              //Show Title on the AppBar only when the data is successfully fetched
+              if (state is HomeDataSuccessState)
+                return Text(state.homeData.title ?? "");
+              else
+                return Text("");
+            },
+          ),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () {
+            //Add Refresh event to the bloc on "swipe to refresh" action
+            context.read<HomeBloc>().add(RefreshHomeDataEvent());
+            return Future.value();
+          },
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is HomeDataLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-          if (state is HomeDataLoadingState) {
-              return Center(child: CircularProgressIndicator());
-          }
+              if (state is HomeDataSuccessState) {
+                final homeData = state.homeData;
+                final itemRows = homeData.rows;
 
-          if (state is HomeDataSuccessState) {
-            final homeData = state.homeData;
-            final itemRows = homeData.rows;
-            _title.value = homeData.title;
+                //build the list only if list of rows is not empty or null
+                if (itemRows?.isNotEmpty ?? false) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return listTile(itemRows![index]);
+                    },
+                    itemCount: itemRows!.length,
+                  );
+                } else
+                  return Center(child: Text("No Data Found"));
+              }
 
-            if (itemRows?.isNotEmpty ?? false) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  return listTile(itemRows![index]);
-                },
-                itemCount: itemRows!.length,
-              );
-            } else
-              return Center(child: Text("No Data Found"));
-          }
-
-             return Center(child: Text((state as HomeDataErrorState).errorMsg));
-
-        },
-      ),
-    ));
+              return Center(child: Text((state as HomeDataErrorState).errorMsg));
+            },
+          ),
+        ));
   }
 
   Widget listTile(ItemRow row) {
