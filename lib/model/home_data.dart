@@ -2,16 +2,16 @@ import 'package:artivatic_task/model/rows.dart';
 
 class HomeData {
   String? title;
-  List<Rows>? rows;
+  List<ItemRow>? rows;
 
   HomeData({this.title, this.rows});
 
   HomeData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     if (json['rows'] != null) {
-      rows = <Rows>[];
+      rows = <ItemRow>[];
       json['rows'].forEach((v) {
-        rows!.add(new Rows.fromJson(v));
+        rows!.add(new ItemRow.fromJson(v));
       });
     }
   }

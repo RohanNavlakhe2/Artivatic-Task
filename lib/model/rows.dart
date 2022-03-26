@@ -1,11 +1,11 @@
-class Rows {
+class ItemRow {
   String? title;
   String? description;
   String? imageHref;
 
-  Rows({this.title, this.description, this.imageHref});
+  ItemRow({this.title, this.description, this.imageHref});
 
-  Rows.fromJson(Map<String, dynamic> json) {
+  ItemRow.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     description = json['description'];
     imageHref = json['imageHref'];
